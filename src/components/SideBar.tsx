@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { api } from "../services/api";
 import { Button } from "../components/Button";
-import { Content } from '../components/Content';
+import { Content } from "../components/Content";
 interface GenreResponseProps {
   id: number;
   name: "action" | "comedy" | "documentary" | "drama" | "horror" | "family";
@@ -9,16 +9,14 @@ interface GenreResponseProps {
 }
 
 interface Movie {
-  movies: Array<{
-    imdbID: string;
-    Title: string;
-    Poster: string;
-    Ratings: Array<{
-      Source: string;
-      Value: string;
-    }>;
-    Runtime: string;
+  imdbID: string;
+  Title: string;
+  Poster: string;
+  Ratings: Array<{
+    Source: string;
+    Value: string;
   }>;
+  Runtime: string;
 }
 
 export function SideBar() {
@@ -32,14 +30,14 @@ export function SideBar() {
   }, []);
 
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [selectedGenre, setSelectedGenre] = useState<GenreResponseProps>({} as GenreResponseProps);
+  const [selectedGenre, setSelectedGenre] = useState<GenreResponseProps>(
+    {} as GenreResponseProps
+  );
 
   useEffect(() => {
-    api
-      .get<Movie[]>(`movies/?Genre_id=${selectedGenreId}`)
-      .then((response) => {
-        setMovies(response.data);
-      });
+    api.get<Movie[]>(`movies/?Genre_id=${selectedGenreId}`).then((response) => {
+      setMovies(response.data);
+    });
 
     api
       .get<GenreResponseProps>(`genres/${selectedGenreId}`)
@@ -47,7 +45,6 @@ export function SideBar() {
         setSelectedGenre(response.data);
       });
   }, [selectedGenreId]);
-
 
   function handleClickButton(id: number) {
     setSelectedGenreId(id);
@@ -73,8 +70,7 @@ export function SideBar() {
         </div>
       </nav>
 
-      <Content movies={movies} selectedGenre={selectedGenre}/>
-
+      <Content movies={movies} selectedGenre={selectedGenre} />
     </>
   );
 }

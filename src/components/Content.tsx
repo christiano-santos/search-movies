@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { api } from "../services/api";
 import { MovieCard } from "../components/MovieCard";
 
+interface GenreResponseProps {
+  id: number;
+  name: "action" | "comedy" | "documentary" | "drama" | "horror" | "family";
+  title: string;
+}
 interface MovieProps {
   imdbID: string;
   Title: string;
@@ -11,12 +16,6 @@ interface MovieProps {
     Value: string;
   }>;
   Runtime: string;
-}
-
-interface GenreResponseProps {
-  id: number;
-  name: "action" | "comedy" | "documentary" | "drama" | "horror" | "family";
-  title: string;
 }
 
 export function Content(props: MovieProps) {
